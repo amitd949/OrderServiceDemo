@@ -15,7 +15,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;*/
 @SpringBootApplication(scanBasePackages = {
         "com.example.demo.orderservice",
         "com.example.demo.paymentservice",
-        "com.example.demo.Auth"
+        "com.example.demo.Auth",
+        "com.example.demo.kafka"
 })
 public class OrderServiceApplication {
     public static void main(String[] args) {

@@ -1,5 +1,7 @@
 package com.example.demo.orderservice.service;
 
+import com.example.demo.kafka.OrderCreatedEvent;
+import com.example.demo.kafka.producer.OrderEventProducer;
 import com.example.demo.orderservice.bean.Order;
 import com.example.demo.orderservice.dao.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class OrderService {
 
     @Autowired
    private PaymentService paymentService;
+    @Autowired
+    private  OrderEventProducer eventProducer;
 
     public Order saveOrders(Order order) {
 
@@ -36,6 +40,17 @@ public class OrderService {
         payments.setTransBy(order.getOrderBy());
         System.out.println(" Payment info is also saving "+ payments);
         paymentService.savePayInfo(payments);
+
+        // kafka published
+        //
+        OrderCreatedEvent event = new OrderCreatedEvent(
+                order.getName(),
+                order.getQty(),
+                order.getPrice(),
+                order.getOrderId()
+        );
+        eventProducer.publish(event);
+
         return orderRepository.save(order);
     }
 
