@@ -15,6 +15,7 @@ public class OrderEventProducer {
     }
 
     public void publish(OrderCreatedEvent event) {
+        System.out.println(" published into the topics "+ event);
         kafkaTemplate.send(
                 "order-events",
                 event.orderId(),
