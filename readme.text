@@ -1,0 +1,3 @@
+
+#modify the partition to 3.
+docker exec -it kafka /opt/kafka/bin/kafka-topics.sh --alter --topic order-events --partitions 3 --bootstrap-server localhost:9092
